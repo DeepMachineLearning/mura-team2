@@ -55,4 +55,9 @@ scikit-learn
 pandas
 numpy
 h5py
+scipy
+matplotlib
+jupyterlab
+ipython-autotime
+progressbar2
 ```
