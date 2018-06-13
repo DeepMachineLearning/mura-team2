@@ -40,11 +40,19 @@ hello = tf.constant('Hello, TensorFlow!')
 sess = tf.Session()
 print(sess.run(hello))
 ```
-in python
+in python.
+
+# Keras
+
+```
+pip install keras
+```
+[read more](https://keras.io/#installation)
 
 # Other packages that we need:
 ```
 scikit-learn
 pandas
 numpy
+h5py
 ```
