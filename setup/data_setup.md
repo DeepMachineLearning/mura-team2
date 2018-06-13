@@ -1,7 +1,9 @@
+Note: you need to first create a `data` directory in the repo directory, i.e. create `mura-team2/data`
+
 # MURA:
 Download from [MURA official website](https://stanfordmlgroup.github.io/competitions/mura/)
 
-Extract to mura-team2/data/MURA-v1.1
+Extract to `mura-team2/data/MURA-v1.1`
 
 # MNIST:
 Start python
