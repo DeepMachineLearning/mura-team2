@@ -60,4 +60,5 @@ matplotlib
 jupyterlab
 ipython-autotime
 progressbar2
+Pillow
 ```
