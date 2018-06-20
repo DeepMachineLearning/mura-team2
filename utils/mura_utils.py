@@ -12,9 +12,29 @@ log = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 def read_pickle_mura(mura_path, sample, target_size=512):
+    '''
+    Reads mura datasets, pads with 0's to a square image,
+    resizes each edge to be target_size, and then saves
+    the datasets as pickle files
+    
+    Parameters
+    ----------
+    mura_path: str
+        string path of MURA-v1.1
+    sample: str
+        switch for running for train or valid sample
+    target_size: int
+        target edge length for resizing
+        
+    Returns
+    -------
+    None
+    
+    '''
     assert sample in ('train', 'valid')
     log.info(f'reading {sample} image paths')
-    paths = pd.read_csv(mura_path.joinpath(f'{sample}_image_paths.csv'), header=None)
+    paths = pd.read_csv(
+        mura_path.joinpath(f'{sample}_image_paths.csv'), header=None)
     paths.columns=['path']
     i = 0
     img_list = []
@@ -23,13 +43,16 @@ def read_pickle_mura(mura_path, sample, target_size=512):
     with progressbar.ProgressBar(max_value=paths.shape[0]) as bar:
         for file in paths['path']:
             label = 1 if 'positive' in file else 0
-            img = Image.open(mura_path.parent.joinpath(file).as_posix()).convert('L')
+            img = Image.open(
+                mura_path.parent.joinpath(file).as_posix()).convert('L')
             delta_w = 512 - img.width
             delta_h = 512 - img.height
-            padding = (delta_w//2, delta_h//2, delta_w-(delta_w//2), delta_h-(delta_h//2))
+            padding = (delta_w//2, delta_h//2, 
+                       delta_w-(delta_w//2), delta_h-(delta_h//2))
             new_img = ImageOps.expand(img, padding)
 
-            img_list.append(np.asarray(new_img.resize((target_size, target_size), Image.ANTIALIAS)))
+            img_list.append(np.asarray(new_img.resize(
+                (target_size, target_size), Image.ANTIALIAS)))
             label_list.append(label)
             i += 1
             bar.update(i)
