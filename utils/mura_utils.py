@@ -7,6 +7,7 @@ from PIL import Image, ImageOps
 import pickle
 import gc
 import logging
+from utils.utils import *
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -65,10 +66,45 @@ def read_pickle_mura(mura_path, sample, target_size=512):
     del label_list; gc.collect()
     
     log.info('picking images')
-    with mura_path.joinpath(f'x_{sample}.pkl').open('wb') as pickle_file:
-        pickle.dump(x, pickle_file, protocol=4)
+    write_pickle_file(x, mura_path.joinpath(f'x_{sample}.pkl'))
     del x; gc.collect()
-    with mura_path.joinpath(f'y_{sample}.pkl').open('wb') as pickle_file:
-        pickle.dump(y, pickle_file, protocol=4)
+    write_pickle_file(y, mura_path.joinpath(f'y_{sample}.pkl'))
     del y; gc.collect()
-    
+    # with mura_path.joinpath(f'x_{sample}.pkl').open('wb') as pickle_file:
+    #     pickle.dump(x, pickle_file, protocol=4)
+    # del x; gc.collect()
+    # with mura_path.joinpath(f'y_{sample}.pkl').open('wb') as pickle_file:
+    #     pickle.dump(y, pickle_file, protocol=4)
+    # del y; gc.collect()
+
+
+def read_mura_pickle(path='data/MURA-v1.1', sample=None):
+    '''
+    Get MURA data
+
+    Parameters
+    ----------
+    path: str
+        path to pickled MURA data
+    sample: str
+        if None, then read both train and valid sample and
+        return a tuple of 4 elements
+        otherwise, return a tuple of two elements corresponding
+        to the x and y datasets for the sample.
+
+    Return
+    ------
+    `obj`:tuple of `obj`:numpy.ndarray
+    '''
+    mura_path = Path(path)
+    if not sample or sample == 'train':
+        train_X = read_pickle_file(mura_path.joinpath(f'x_train.pkl'))
+        train_Y = read_pickle_file(mura_path.joinpath(f'y_train.pkl'))
+        if sample == 'train':
+            return train_X, train_Y
+    if not sample or sample == 'valid':
+        test_X = read_pickle_file(mura_path.joinpath(f'x_valid.pkl'))
+        test_Y = read_pickle_file(mura_path.joinpath(f'y_valid.pkl'))
+        if sample == 'valid':
+            return test_X, test_Y
+    return train_X, train_Y, test_X, test_Y
