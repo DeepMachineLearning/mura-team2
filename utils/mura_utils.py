@@ -43,9 +43,9 @@ def read_pickle_mura(mura_path, sample, target_size=512):
     
     log.info('picking images')
     with mura_path.joinpath(f'x_{sample}.pkl').open('wb') as file:
-        pickle.dump(x, file, protocol=4)
+        pickle.dump(file, x, protocol=4)
     del x; gc.collect()
     with mura_path.joinpath(f'y_{sample}.pkl').open('wb') as file:
-        pickle.dump(y, file, protocol=4)
+        pickle.dump(file, y, protocol=4)
     del y; gc.collect()
     
