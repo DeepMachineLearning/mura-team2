@@ -41,10 +41,10 @@ def read_pickle_mura(mura_path, sample, target_size=512):
     label_list = []
     target_size = 512
     with progressbar.ProgressBar(max_value=paths.shape[0]) as bar:
-        for file in paths['path']:
-            label = 1 if 'positive' in file else 0
+        for image_file in paths['path']:
+            label = 1 if 'positive' in image_file else 0
             img = Image.open(
-                mura_path.parent.joinpath(file).as_posix()).convert('L')
+                mura_path.parent.joinpath(image_file).as_posix()).convert('L')
             delta_w = 512 - img.width
             delta_h = 512 - img.height
             padding = (delta_w//2, delta_h//2, 
@@ -65,10 +65,10 @@ def read_pickle_mura(mura_path, sample, target_size=512):
     del label_list; gc.collect()
     
     log.info('picking images')
-    with mura_path.joinpath(f'x_{sample}.pkl').open('wb') as file:
-        pickle.dump(file, x, protocol=4)
+    with mura_path.joinpath(f'x_{sample}.pkl').open('wb') as pickle_file:
+        pickle.dump(x, pickle_file, protocol=4)
     del x; gc.collect()
-    with mura_path.joinpath(f'y_{sample}.pkl').open('wb') as file:
-        pickle.dump(file, y, protocol=4)
+    with mura_path.joinpath(f'y_{sample}.pkl').open('wb') as pickle_file:
+        pickle.dump(y, pickle_file, protocol=4)
     del y; gc.collect()
     
