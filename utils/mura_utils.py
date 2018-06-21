@@ -40,7 +40,6 @@ def read_pickle_mura(mura_path, sample, target_size=512):
     i = 0
     img_list = []
     label_list = []
-    target_size = 512
     with progressbar.ProgressBar(max_value=paths.shape[0]) as bar:
         for image_file in paths['path']:
             label = 1 if 'positive' in image_file else 0
