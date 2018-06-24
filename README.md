@@ -43,3 +43,14 @@ Using the resnet50 predefined in Keras to train on MURA data
 
 ### [1_3_densenet_mura.ipynb](1_3_densenet_mura.ipynb)
 - Better results in the first 50 epoches than resnet (kappa=0.44)
+
+
+## Next steps:
+- FN seems to be much larger than FP - maybe we should adjust prediction to a balanced sample?
+- More on Cohen's kappa - Can we maximize it given accuracy?
+- Streamline model evaluation
+- Generate model performance by body parts - if a body part is significantly different, maybe we should train a separate model
+- extract middle layer activation patterns - is our algo looking at the right place?
+- More ways to prevent overfit?
+- Try using WGAN to generate more sample for training?
+- other forms of models, e.g. activation model?
