@@ -39,6 +39,7 @@ Some notes on the mathematical properties of Cohen's Kappa
 Using the resnet50 predefined in Keras to train on MURA data
 - Accuracy on training set is above 99%, but on test set is 69%: possible over fit
 - trying with image pertubation to reduce overfit
+    - With image pertubation, kappa starts to correlate with training set accuracy - good sign
 
 ### [1_3_densenet_mura.ipynb](1_3_densenet_mura.ipynb)
-Trying the above with DenseNet201
+- Better results in the first 50 epoches than resnet (kappa=0.44)
