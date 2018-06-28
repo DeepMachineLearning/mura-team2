@@ -3,13 +3,12 @@ from sklearn.metrics import confusion_matrix
 from matplotlib import pyplot as plt
 import numpy as np
 
-def plot_confusion_matrix(true_label, pred_label, classes, normalize=False, title='Confusion matrix', cmap=plt.cm.Blues, figsize=None):
+def _plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix', cmap=plt.cm.Blues, figsize=None):
     """
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
     (This function is copied from the scikit docs.)
     """
-    cm = confusion_matrix(true_label, pred_label)
     plt.figure(figsize=figsize)
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
@@ -27,3 +26,8 @@ def plot_confusion_matrix(true_label, pred_label, classes, normalize=False, titl
     plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
+    
+
+def plot_confusion_matrix(true_label, pred_label, classes, normalize=False, title='Confusion matrix', cmap=plt.cm.Blues, figsize=None):
+    cm = confusion_matrix(true_label, pred_label)
+    _plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix', cmap=plt.cm.Blues, figsize=None)
