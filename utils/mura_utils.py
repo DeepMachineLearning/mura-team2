@@ -95,8 +95,8 @@ def read_mura_pickle(path='data/MURA-v1.1', sample=None):
     ------
     `obj`:tuple of `obj`:numpy.ndarray
     '''
-    assert sample in ('train', 'valid'), (
-        "sample must be one of ('train', 'valid')")
+    assert sample in (None, 'train', 'valid'), (
+        "sample must be one of (None, 'train', 'valid')")
     mura_path = Path(path)
     if not sample or sample == 'train':
         train_X = read_pickle_file(mura_path.joinpath(f'x_train.pkl'))
