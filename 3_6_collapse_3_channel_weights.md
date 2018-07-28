@@ -1,7 +1,5 @@
 
-
-
-# 3_6+: trying to use weights from imagenet directly
+# 3.6 - 3.7: trying to use weights from imagenet directly
 Methodology:
 Collapse the 3-channel pre-trained weight into one by performing operation on the weights of the channel. Then lock the base layers and train 30 epochs to check model performance.
 - Comparing different ways of collapsing the weights:
