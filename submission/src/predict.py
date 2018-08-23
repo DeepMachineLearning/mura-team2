@@ -21,7 +21,7 @@ def normalize_pixels(x):
     x /= 255
     return x
 
-def read_mura(path_file_csv, parent_folder, target_size=256):
+def read_mura(path_file_csv, parent_folder, target_size=512):
     paths = pd.read_csv(path_file_csv, header=None)
     paths.columns = ['path']
     paths = parse_path(paths)
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     try:
         model_name = sys.argv[3]
     except:
-        model_name = '2_1_submodel_335'
+        model_name = '7_0_full_size_70'
     finally: 
         pass
     model_file = f'src/model/{model_name}.h5'
@@ -56,6 +56,12 @@ if __name__ == '__main__':
         parent_folder = sys.argv[4]
     except:
         parent_folder = './'
+    finally:
+        pass
+    try:
+        output_type = sys.argv[5]
+    except:
+        output_type = 'label'
     finally:
         pass
 
@@ -76,7 +82,11 @@ if __name__ == '__main__':
     log.info('-'*20 + 'Making predictions' + '-'*20)
     y_hat = model.predict(np.reshape(x, (xs[0], xs[1], xs[2], 1)))
     studies['y'] = y_hat
-    predict = studies.groupby('study')[['y']].mean().round(0).reset_index()
+    probability = studies.groupby('study')[['y']].mean()
+    if output_type == 'label':
+        predict = probability.round(0).reset_index()
+    else:
+        predict = probability.reset_index()
 
     log.info('-'*20 + f'Writing results to {output_csv_path}' + '-'*20)
     predict.to_csv(output_csv_path, header=False, index=False)
